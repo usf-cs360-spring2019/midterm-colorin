@@ -1,0 +1,78 @@
+<html>
+<head>
+  <title></title>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous">
+  </script>
+  <script>
+    $(function(){
+      $("#header").load("header.html");
+      $("#footer").load("footer.html");
+    });
+  </script>
+</head>
+<body>
+
+<div id="header"></div>
+
+<section class="section">
+  <div class="container content">
+    <h2 id="about">
+      Team
+    </h2>
+
+    <div class="media">
+      <div class="media-left">
+        <p class="image is-128x128">
+          <!-- todo: replace with your profile image -->
+          <img src="./resources/profileCristina.jpg">
+        </p>
+      </div>
+
+      <div class="media-content">
+          <p>
+            <strong>Cristina Chu</strong>
+            <br/>
+            Computer Science Master's Student at the University of San Francisco.
+            <br/>
+            <a href="https://www.linkedin.com/in/cristina-chu-a271bb82/">
+              <span class="fab fa-linkedin"></span>
+              <span>LinkedIn</span>
+            </a>
+          </p>
+      </div>
+    </div>
+    <div class="media">
+      <div class="media-left">
+        <p class="image is-128x128">
+          <img src="./resources/profilePicDiana.jpg">
+        </p>
+      </div>
+
+      <div class="media-content">
+          <p>
+            <strong>Diana Pérez Hernández</strong>
+            <br/>
+             Bachelor in Software Engineering, currently Computer Science Master's Student at the University of San Francisco
+            <br/>
+            <a href="https://github.com/dianaprzh">
+              <span class="fab fa-github"></span>
+              <span>Github</span>
+            </a>
+            &bullet;
+            <a href="http://linkedin.com/in/diana-perez-hernandez-5055374a">
+              <span class="fab fa-linkedin"></span>
+              <span>LinkedIn</span>
+            </a>
+          </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer"></div>
+
+</body>
+</html>
