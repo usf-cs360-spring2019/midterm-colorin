@@ -1,13 +1,7 @@
-#banner {
-  margin: 5px;
-  margin-left: 85px;
-  margin-right: 85px;
-  padding: 0px;
+.hero.is-info.is-bold {
   background-image: url("./resources/sf_pic.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  height: 400px;
-  width: 1500px;
   background-color: #cccccc
 }
 
