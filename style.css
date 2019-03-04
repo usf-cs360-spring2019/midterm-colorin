@@ -2,7 +2,14 @@
   background-image: url("./resources/sf_pic.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #cccccc
+  background-size: cover;
+  background-color: #9A84AA;
+  height: 450px;
+}
+
+.hero-foot {
+  text-shadow: 1px 1px #000000;
+  /* font-weight: bold; */
 }
 
 h1 {
