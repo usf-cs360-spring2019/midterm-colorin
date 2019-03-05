@@ -41,7 +41,21 @@
       <h3>Processing</h3>
 
       <p>
-        << processing >>
+        As mentioned before, the first step for processing the data was to filter it and only look at the months of September, October and November for the years
+        of 2014-2018.
+      </p>
+      <p>
+        We do have a few prototypes that are using all the records from the last 5 years (2014-2018), but they are only to explain the context of our topic (and dataset)
+        among the rest of the data.
+      </p>
+      <p>
+        For some of our visualization, we calculated certain fields. First, to obtain the "Avg. Time To Send Response", we took the minute difference between the "Received Datetime"
+        and the "Dispatched Datetime" columns. We would have liked to use the "On Scene Datetime" column, but its values were mostly null. Furthermore, to distinguish between
+        "Fire-Related" calls and "Non-Fire-Related" calls, we simply used the "Call Final Disposition" column, where a "Fire" value mapped to a "Fire-Related" call and all other values
+        mapped to "Non-Fire-Related" calls. 
+      </p>
+      <p>
+
       </p>
 
     </div>
