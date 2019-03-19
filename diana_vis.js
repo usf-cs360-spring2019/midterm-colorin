@@ -8,17 +8,18 @@ const margin = {
 const svg = d3.select("svg");
 const plot = svg.append("g").attr("id", "plot");
 const bounds = svg.node().getBoundingClientRect();
-plot.attr("transform", translate(margin.left, margin.top + 30));
+plot.attr("transform", translate(margin.left, margin.top + 130));
 const width = bounds.width - margin.left - margin.right;
 const height = bounds.height - margin.top - margin.bottom;
 let callTypes = ["Oil Spill", "Lightning Strike (Investigation)", "Marine Fire","Industrial Accidents" ,
                 "Explosion", "HazMat" , "Fuel Spill", "Odor (Strange / Unknown)", "Smoke Investigation (Outside)",
                 "Electrical Hazard", "Vehicle Fire", "Gas Leak (Natural and LP Gases)","Outside Fire",
                 "Other", "Structure Fire"];
-let parsedData = {};
+let originalData = {};
 var dateParser = d3.timeParse("%m/%d/%Y");
 var xScale = {},
     yScale = {};
+
 
 var x0 = d3.scaleBand()
       .rangeRound([0, width - 200])
@@ -48,6 +49,9 @@ var colorScale = d3.scaleOrdinal()
       "#FEBE70", "#59A04B", "#A1CCF1","#D2C240", "#636FF9",
       "#80BEB5", "#B69A2A"]);
 
+var grayColorScale = d3.scaleOrdinal()
+          .range(["#F0F0F0"]);
+
 var stack = d3.stack()
     .order(d3.stackOrderDescending)
     .offset(d3.stackOffsetNone);
@@ -55,12 +59,12 @@ var stack = d3.stack()
 d3.csv("Fire_Department_Calls_for_Service.csv", convert).then(drawStackBar);
 
 function drawStackBar(data) {
+  originalData = data;
   var filterData = data.filter(function(value) {
     return callTypes.includes(value.callType);
   });
   buildScales(filterData);
   var keys = colorScale.domain();
-  console.log(keys);
   var groupData = d3.nest()
   .key(function(d) { return d.month + d.year; })
   .rollup(function(d, i) {
@@ -85,8 +89,6 @@ function drawStackBar(data) {
   .entries(filterData)
   .map(function(d){ return d.value; });
   var stackData = stack.keys(keys)(groupData);
-
-  console.log("stackData", stackData);
 
   var serie = plot.selectAll(".serie")
     .data(stackData)
@@ -135,32 +137,46 @@ function drawColorScale() {
 
   var y = 65;
   for (var i in callTypes) {
-    svg .append("text")
+    svg.append("text")
+        .attr("class", "legend-names")
         .attr("x", 960)
         .attr("y", y + 20)
         .attr("text-anchor", "right")
         .style("font-size", "12px")
         .text(callTypes[i])
-        .on("click", function(){
-          var text = svg.selectAll("rect");
-          d3.select(this)
-            .transition(t)
-            .style("fill", "gray");
-
-          console.log(text);
+        .on("mouseover", function() {})
+        .on("mouseout", function() {
+          plot.selectAll(".serie")
+            .attr("fill", function(d) {
+              return colorScale(d.key);
+            });
+          })
+        .on("mousemove", function(d) {
+              var me = d3.select(this);
+              var filter = me.text();
+              plot.selectAll(".serie")
+                  .attr("fill", function(d) {
+                    var selectedColor = colorScale(filter);
+                    if (d.key == filter) {
+                      return colorScale(d.key);
+                    }
+                    return grayColorScale(d.key);
+                  });
         });
         y += 20;
   }
   y = 53;
   for (var i in callTypes) {
     svg.append("rect")
+        .attr("class", "legend-colors")
         .attr("x", 940)
         .attr("y", y + 20)
         .attr("width", 15)
         .attr("height", 15)
         .style("fill", colorScale(callTypes[i]));
         y += 20;
-  }
+      }
+
 }
 
 function buildScales(filterData) {
@@ -169,9 +185,17 @@ function buildScales(filterData) {
     .rangeRound([0, x0.bandwidth()])
     .padding(0.2);
   colorScale.domain(filterData.map(function(d) { return d.callType; }));
+  grayColorScale.domain(filterData.map(function(d) { return d.callType; }));
 }
 
 function drawAxis() {
+  svg.append("text")
+        .attr("x", margin.left - 60)
+        .attr("y", margin.top + 50)
+        .attr("text-anchor", "left")
+        .style("font-size", "23px")
+        .text("Incidents over the past 5 years (2014 - 2018) by Call Type");
+
   plot.append("g")
       .attr("class", "axis")
       .attr("transform", translate(0, height - 780))
@@ -253,28 +277,6 @@ function drawAxis() {
   plot.append("g")
       .attr("class", "axis")
       .call(d3.axisLeft(y));
-}
-
-function buildDimensionScales() {
-  var countMax = 0;
-  var xScaleNames = ["September", "October", "November"];
-  parsedData.each(function (value, key) {
-      var valueMap = d3.map(value);
-      valueMap.each(function (v, k) {
-        if (countMax < v.count) {
-          countMax = v.count;
-        }
-      })
-  })
-  yScale = d3.scaleLinear()
-    .domain([0, countMax])
-    .range([height, 0])
-    .nice();
-
-  xScale = d3.scaleBand()
-      .domain(xScaleNames)
-      .range([0, (width - 570)/4])
-      .paddingInner(0.6);
 }
 
 
