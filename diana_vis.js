@@ -181,6 +181,7 @@ function drawColorScale() {
 
 function buildScales(filterData) {
   x0.domain(filterData.map(function(d) { return d.year; }));
+  x0.domain(x0.domain().sort());  
   x1.domain(filterData.map(function(d) { return d.month; }))
     .rangeRound([0, x0.bandwidth()])
     .padding(0.2);
