@@ -1,0 +1,10 @@
+svg {
+  width: 1150px;
+  height: 800px;
+}
+
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.4;
+  shape-rendering: crispEdges;
+}
