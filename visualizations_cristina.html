@@ -14,9 +14,11 @@
     });
   </script>
 </head>
+
 <body>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="vis_1_cristina.js"></script>
+  <script src="vis_2_cristina.js"></script>
 
   <div id="header"></div>
 
@@ -26,8 +28,10 @@
       <!-- todo: modify as necessary (or move visualizations to separate pages) -->
       <h2>Visualization 1</h2>
 
-      <p style="text-align:center"><svg width="960" height="500" style="background-color: whitesmoke; border: 1px solid black;">
-      </svg></p>
+      <p style="text-align:center">
+        <div id="change_views">Change Between Views:</div>
+        <svg id="vis1" width="960" height="550" style="background-color: whitesmoke; border: 1px solid black;"></svg>
+      </p>
 
       <script type="text/javascript">
         d3.csv("./data/fire_num_records.csv").then(function(data) {
@@ -36,21 +40,20 @@
       </script>
 
       <h3>Interpretation</h3>
-
       <p>
         If appropriate, provide a brief discussion of how to interpret this visualization (e.g. how the data is encoded) and how to interact with this visualization. Some of this discussion may not be necessary depending on the legends provided with the visualization.
       </p>
 
       <h3>Discussion</h3>
-
       <p>
         If appropriate, provide a brief discussion of the primary goal and findings of the visualization, any challenges encountered creating the visualization, and any other context as required by the assignment.
       </p>
 
       <h3>Credit</h3>
-
       <p>
-        If appropriate, provide credit for the dataset, any code used, and design inspirations here. Unsufficient discussion here is a violation of the <a href="/syllabus.html#cheating-policy">academic honesty policy</a> and may result in an F grade for the assignment or the <em>entire</em> course.
+        For the interactivity (change between different charts), I used the following examples:
+        <li><a href="https://www.d3-graph-gallery.com/graph/interactivity_button.html">Buttons 1</a></li>
+        <li><a href="http://bl.ocks.org/d3noob/7030f35b72de721622b8">Buttons 2</a></li>
       </p>
     </div>
   </section>
