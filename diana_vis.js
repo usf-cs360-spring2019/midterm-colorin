@@ -36,12 +36,6 @@ var tooltip = svg.append("g")
       .attr("class", "tooltip")
       .style("display", "none");
 
-    // tooltip.append("rect")
-    //   .attr("width", 250)
-    //   .attr("height", 20)
-    //   .attr("fill", "white")
-    //   .style("opacity", 0.5);
-
     tooltip.append("text")
       .attr("x", 15)
       .attr("dy", "1.2em")
