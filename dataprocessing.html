@@ -39,25 +39,32 @@
       </p>
 
       <h3>Processing</h3>
-
       <p>
-        As mentioned before, the first step for processing the data was to filter it and only look at the months of September, October and November for the years
-        of 2014-2018.
+        As the topic of our project is to look at the fire trends that may correlate to the months of September, October and November, we filtered the dataset
+        to only look at those months for the years 2014 to 2018 (last 5 years). To reduce the size of the dataset even more, we also filtered only the columns we
+        wanted to use, which were:
+        <li>Call Date</li>
+        <li>Call Type</li>
+        <li>Call Final Disposition</li>
+        <li>Call Type Group</li>
+        <li>Neighborhoods - Analysis Boundaries</li>
       </p>
       <p>
-        We do have a few prototypes that are using all the records from the last 5 years (2014-2018), but they are only to explain the context of our topic (and dataset)
-        among the rest of the data.
+        Even though our focus was only the months of September to November, we also wanted to give some context to our focus in relation to the overall
+        data of those years. Instead of using all rows for each year, we calculated the number of rows per month for each year, and created a new
+        dataset with those numbers. Apart from calculating total number of calls, we also calculated number of calls with specific characteristics such as
+        calls with "Call Type Group = Fire" and calls with "Call Final Disposition = Fire".
       </p>
       <p>
-        For some of our visualization, we calculated certain fields. First, to obtain the "Avg. Time To Send Response", we took the minute difference between the "Received Datetime"
-        and the "Dispatched Datetime" columns. We would have liked to use the "On Scene Datetime" column, but its values were mostly null. Furthermore, to distinguish between
-        "Fire-Related" calls and "Non-Fire-Related" calls, we simply used the "Call Final Disposition" column, where a "Fire" value mapped to a "Fire-Related" call and all other values
-        mapped to "Non-Fire-Related" calls. 
+        The columns of the new dataset are:
+        <li>Month of Call Date</li>
+        <li>Year of Call Date</li>
+        <li>Total Number of Records</li>
+        <li>Number of Records (Medical Incident)</li>
+        <li>Number of Records (Call Type Group = Fire)</li>
+        <li>Number of Records (Call Type Group = Fire + Potential life threatening)</li>
+        <li>Number of Records (Call Final Disposition = Fire)</li>
       </p>
-      <p>
-
-      </p>
-
     </div>
   </section>
 
