@@ -181,7 +181,7 @@ function drawColorScale() {
 
 function buildScales(filterData) {
   x0.domain(filterData.map(function(d) { return d.year; }));
-  x0.domain(x0.domain().sort());  
+  x0.domain(x0.domain().sort());
   x1.domain(filterData.map(function(d) { return d.month; }))
     .rangeRound([0, x0.bandwidth()])
     .padding(0.2);
@@ -192,9 +192,10 @@ function buildScales(filterData) {
 function drawAxis() {
   svg.append("text")
         .attr("x", margin.left - 60)
-        .attr("y", margin.top + 50)
+        .attr("y", margin.top + 40)
         .attr("text-anchor", "left")
-        .style("font-size", "23px")
+        .style("font-size", "30px")
+        .style("font-weight", "bold")
         .text("Incidents over the past 5 years (2014 - 2018) by Call Type");
 
   plot.append("g")
