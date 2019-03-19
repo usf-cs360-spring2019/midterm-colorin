@@ -7,6 +7,7 @@ var drawLineGraph = function(data) {
         "x": data[i]["Month of Call Date"],
         "y": parseInt(data[i]["Total Number of Records"].replace(/,/g, "")),
         "y2": parseInt(data[i]["Number of Records (Call Type Group = Fire)"].replace(/,/g, "")),
+        "y3": parseInt(data[i]["Number of Records (Call Final Disposition = Fire)"].replace(/,/g, "")),
         "year": data[i]["Year of Call Date"],
       });
     };
@@ -72,6 +73,7 @@ var drawLineGraph = function(data) {
     .tickSize(-plotWidth);
   plot.append("g")
     .call(gridlines)
+    .attr("class", "gridlines")
     .attr("color", "#E2E2E2");
 
   // creating the lines
@@ -112,124 +114,11 @@ var drawLineGraph = function(data) {
     .attr("stroke-width", 3)
     .attr("fill", "none");
 
-
-  // Add interactivity
-  // https://bl.ocks.org/alandunning/cfb7dcd7951826b9eacd54f0647f48d3
-  // // var focus = plot.append("g")
-  // //       .attr("class", "focus")
-  // //       .style("display", "none");
-  //
-  // for (var j=0; j<dataPoints.length;j++){
-  //     console.log(j);
-  //     for(var i=0;i<j.length;i++){
-  //                focus.append("g")
-  //                  .attr("class", "focus"+i)
-  //                  .append("circle")
-  //                	.style("stroke",  data[i].year)
-  //                	.style("fill", data[i].year)
-  //                	.attr("transform", "translate(" + margin.left  + "," + margin.top + ")")
-  //                  .attr("r", 2);
-  //                svg.select(".focus"+i)
-  //                  .append("text")
-  //                	.attr("transform", "translate(" + margin.left  + "," + margin.top + ")")
-  //                  .attr("x", 9)
-  //                  .attr("dy", ".35em");
-  //            }
-  //        };
-  // //
-  // // focus.append("circle")
-  // //     .attr("r", 2);
-  // //
-  // // focus.append("text")
-  // //     .attr("x", 15)
-  // //   	.attr("dy", ".31em");
-  //
-  // svg.append("rect")
-  //        .attr("class", "overlay")
-  //        .attr("width", plotHeight)
-  //        .attr("height", plotWidth)
-  //        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-  //        .on("mouseover", function() { focus.style("display", null); })
-  //        .on("mouseout", function() { focus.style("display", "none"); })
-  //        .on("mousemove",  mousemove);
-  //
-  // // svg.append("rect")
-  // //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-  // //     .attr("class", "overlay")
-  // //     .attr("width", plotWidth)
-  // //     .attr("height", plotHeight)
-  // //     .on("mouseover", function() { focus.style("display", null); })
-  // //     .on("mouseout", function() { focus.style("display", "none"); })
-  // //     .on("mousemove", mousemove);
-  //
-  // var bisectDate = d3.bisector(
-  //     function(d) {
-  //       console.log("HERE:", d);
-  //       return d;
-  //     }
-  // ).left;
-  //
-  // var getPoint = function(d) {
-  //   for (i = 0; i < dataPoints[2014].length; i++){
-  //     if (dataPoints[2014][i].x === d) {
-  //       return dataPoints[2014][i];
-  //     };
-  //   };
-  // };
-  //
-  // var getPoints = function(d) {
-  //   let points = [];
-  //   var j;
-  //   for (j=2014; j<2019; j++){
-  //     console.log("J",j);
-  //     for (i = 0; i < dataPoints[j].length; i++){
-  //       if (dataPoints[j][i].x === d) {
-  //         points.push(dataPoints[j][i]);
-  //       };
-  //     };
-  //   };
-  //   return points;
-  // };
-  //
-  //
-  // function mousemove() {
-  //   var x0 = scaleBandInvert(x)(d3.mouse(this)[0]),
-  //       // d = bisectDate(data, x0, 1);
-  //       d = getPoint(x0);
-  //       // i = bisectDate(data, x0, 1),
-  //       // d0 = data[i - 1],
-  //       // d1 = data[i],
-  //       // d = x0 - d0.x > d1.y - x0 ? d1 : d0;
-  //   // console.log(x0, i, d0, d1);
-  //   console.log("THIS", d);
-  //   // focus.attr("transform", "translate(" + x(d.x)+shift + "," + y(d.y) + ")");
-  //   // focus.select("text").text(function() { return d.y; });
-  //
-  //   var series = getPoints(x0);
-  //   console.log("HELLO", series);
-  //   for(var i=0; i<series.length;i++){
-  //               var selectedFocus = svg.selectAll(".focus"+i);
-  //               selectedFocus.attr("transform", "translate(" + x(series[i].x) + "," + y(series[i].y) + ")");
-  //               selectedFocus.select("text").text(series[i].y);
-  //             }
-  // }
-
-  // .overlay {
-  //   fill: none;
-  //   pointer-events: all;
-  // }
-  //
-  // .focus circle {
-  //   fill: #6F257F;
-  //   stroke: #6F257F;
-  //   stroke-width: 2px;
-  // }
-
   // Add axis and graph titles
   svg.append("text")
     .attr("class", "chart_title")
-    .style("font-size", "25")
-    .attr("y", margin.top/2)
+    .style("font-size", "21")
+    .attr("y", margin.top/2 + 4)
     .attr("x", 10)
     .style("text-anchor", "start")
     .text("Total Number of Calls Through the Years 2014-2018 by Month");
@@ -242,12 +131,13 @@ var drawLineGraph = function(data) {
     .text("Month of Call");
   plot.append("text")
     .style("font-size", "14")
+    .attr("class", "y_axis_title")
     .attr("transform", "rotate(-90)")
     .attr("y", -margin.left + 6)
     .attr("x", -(plotHeight/2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Number of Calls");
+    .text("Total Number of Calls");
 
   // Add legend
   let legendTitle = svg.append("text")
@@ -279,10 +169,11 @@ var drawLineGraph = function(data) {
     .text(function(d, i) { return years[i]; });
 
   // Add buttons for interactivity
-  let allGroup = ["Total Calls Years 2014-2018", "Fire-Related Calls 2014-2018"];
+  let allGroup = ["Total Calls Years 2014-2018", "Fire-Related Calls 2014-2018", "Call-Final-Disposition:Fire 2014-2018"];
 
   var dropdownButton = d3.select("#change_views").append('select');
 
+//class="btn btn-secondary dropdown-toggle"
   // add the options to the button
   dropdownButton
     .selectAll('myOptions')
@@ -290,7 +181,7 @@ var drawLineGraph = function(data) {
     .enter()
   	.append('option')
     .text(function (d) { return d; })
-    .attr("value", function (d) { return d; })
+    .attr("value", function (d) { return d; });
 
   // When the button is changed, run the updateChart function
   dropdownButton.on("change", function(d) {
@@ -301,9 +192,14 @@ var drawLineGraph = function(data) {
   function updateChart(chart) {
     if (chart === "Total Calls Years 2014-2018") {
       svg.select(".chart_title").text("Total Number of Calls Through the Years 2014-2018 by Month");
+      plot.select(".y_axis_title").text("Total Number of Calls")
 
       y.domain([20000, 28000]);
       plot.select(".y-axis").call(yAxis);
+      gridlines = d3.axisLeft(y)
+        .tickFormat("")
+        .tickSize(-plotWidth);
+      plot.select(".gridlines").call(gridlines);
 
       lineFunction
         .x(function(d) { return x(d.x) + shift; })
@@ -315,11 +211,37 @@ var drawLineGraph = function(data) {
       plot.select(".line_2017").attr("d", lineFunction(dataPoints[2017]));
       plot.select(".line_2018").attr("d", lineFunction(dataPoints[2018]));
     }
+    else if (chart === "Call-Final-Disposition:Fire 2014-2018") {
+      svg.select(".chart_title").text("Number of Calls with a 'Fire' Call Final Disposition Code Through Years 2014-2018 by Month");
+      plot.select(".y_axis_title").text("Number of Calls with Code:Fire")
+
+      y.domain([1000, 9000]);
+      plot.select(".y-axis").call(yAxis);
+      gridlines = d3.axisLeft(y)
+        .tickFormat("")
+        .tickSize(-plotWidth);
+      plot.select(".gridlines").call(gridlines);
+
+      lineFunction
+        .x(function(d) { return x(d.x) + shift; })
+        .y(function(d) { return y(d.y3); });
+
+      plot.select(".line_2014").attr("d", lineFunction(dataPoints[2014]));
+      plot.select(".line_2015").attr("d", lineFunction(dataPoints[2015]));
+      plot.select(".line_2016").attr("d", lineFunction(dataPoints[2016]));
+      plot.select(".line_2017").attr("d", lineFunction(dataPoints[2017]));
+      plot.select(".line_2018").attr("d", lineFunction(dataPoints[2018]));
+    }
     else {
       svg.select(".chart_title").text("Number of Fire-Related Calls Through the Years 2014-2018 by Month");
+      plot.select(".y_axis_title").text("Number of Fire-Related Calls")
 
       y.domain([500, 1200]);
       plot.select(".y-axis").call(yAxis);
+      gridlines = d3.axisLeft(y)
+        .tickFormat("")
+        .tickSize(-plotWidth);
+      plot.select(".gridlines").call(gridlines);
 
       lineFunction
         .x(function(d) { return x(d.x) + shift; })
